@@ -23,15 +23,35 @@ contract('Lottery', ([deployer, player]) => {
         })
     })
 
-    describe('entry', async () => {
-        it('entries succefully', async () => {
-            let noPlayers = await lottery.getPlayersLength();
-
+    describe('security', async () => {
+        it('get contracts balance', async () => {
+            // adds 3 players
+            await lottery.sendTransaction({ from: player, value: web3.utils.toWei('0.1', 'ether') });
+            await lottery.sendTransaction({ from: player, value: web3.utils.toWei('0.1', 'ether') });
             await lottery.sendTransaction({ from: player, value: web3.utils.toWei('0.1', 'ether') });
 
-            let newPlayer = await lottery.players(0);
+            const balance = await lottery.getBalance({ from: deployer });
+            assert.equal(balance, web3.utils.toWei('0.3', 'ether'));
+        });
 
-            assert.equal(noPlayers, 0); //ensure that there are no players after the player's entry
+        it('fails to get contracts balance', async () => {
+            let fails = false;
+            await lottery.getBalance({ from: player })
+                .catch((error) => {
+                    fails = true;
+                });
+            assert.equal(fails, true);
+        });
+    });
+
+    describe('entry', async () => {
+        it('entries succefully', async () => {
+            await lottery.sendTransaction({ from: player, value: web3.utils.toWei('0.1', 'ether') });
+
+            let numberOfPlayers = await lottery.getPlayersLength();
+            let newPlayer = await lottery.players(3);
+
+            assert.equal(numberOfPlayers, 4); //ensure that there are no players after the player's entry
             assert.equal(newPlayer, player); //after entry, players array gets bigger
         });
 
