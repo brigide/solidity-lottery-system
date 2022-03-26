@@ -30,4 +30,19 @@ contract Lottery {
     function getPlayersLength() public view returns (uint256) {
         return players.length;
     }
+
+    function random() public view returns (uint256) {
+        // WARNING: do not use this random generator in real apps
+        // TODO: search about chainlink to implement a random generator
+        return
+            uint256(
+                keccak256(
+                    abi.encodePacked(
+                        block.difficulty,
+                        block.timestamp,
+                        players.length
+                    )
+                )
+            );
+    }
 }
