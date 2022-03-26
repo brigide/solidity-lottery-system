@@ -26,4 +26,8 @@ contract Lottery {
     function getBalance() public view authorizeManager returns (uint256) {
         return address(this).balance;
     }
+
+    function getPlayersLength() public view returns (uint256) {
+        return players.length;
+    }
 }
