@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1"
+  }
+}
