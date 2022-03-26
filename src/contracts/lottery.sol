@@ -18,7 +18,7 @@ contract Lottery {
 
     // automatic called function when the contract receives externally owned accounts transferences
     receive() external payable {
-        require(msg.value == 0.1 ether);
+        require(msg.value == 0.1 ether, "INVALID_ETHER_AMOUNT");
         players.push(payable(msg.sender)); // push the eth sender to players array, counting it's entry to the lottery
     }
 

@@ -35,14 +35,14 @@ contract('Lottery', ([deployer, player]) => {
             assert.equal(newPlayer, player); //after entry, players array gets bigger
         });
 
-        // it('cant buy', async () => {
-        //     await property.setPrice(5000000000);
-
-        //     assert.equal(deployer, await property.owner()); //before buying, owner is its own deployer
-
-        //     result = await property.buy({ from: buyer, value: web3.utils.toWei('0', 'GWei') })
-
-        //     assert.equal(deployer, await property.owner()); //after buying, deployer stills the owner
-        // });
+        //TODO: write a test based on require error slug message
+        it('sent invalid ether amount', async () => {
+            let fails = false;
+            await lottery.sendTransaction({ from: player, value: web3.utils.toWei('0.01', 'ether') })
+                .catch((error) => {
+                    fails = true;
+                });
+            assert.equal(fails, true);
+        });
     })
 })
