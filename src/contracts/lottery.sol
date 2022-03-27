@@ -33,7 +33,7 @@ contract Lottery {
 
     function random() public view returns (uint256) {
         // WARNING: do not use this random generator in real apps
-        // TODO: search about chainlink to implement a random generator
+        // TODO: search about chainlink to implement a real random generator
         return
             uint256(
                 keccak256(
