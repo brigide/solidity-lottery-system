@@ -45,4 +45,22 @@ contract Lottery {
                 )
             );
     }
+
+    function clearPlayers() public authorizeManager {
+        delete (players);
+    }
+
+    function pickWinner() public authorizeManager returns (address) {
+        require(players.length >= 3, "LESS THAN 3 PLAYERS");
+
+        uint256 randomNumber = random();
+        uint256 winnerIndex = randomNumber % players.length;
+        address payable winner = players[winnerIndex];
+
+        winner.transfer(getBalance());
+
+        clearPlayers();
+
+        return winner;
+    }
 }
